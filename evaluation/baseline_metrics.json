@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-09-22T08:27:53.938366+00:00",
+  "seed": 42,
+  "encoder": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "dataset": {
+    "train": 600,
+    "val": 120,
+    "test": 179,
+    "classes": [
+      "bill_balance",
+      "card_declined",
+      "freeze_account",
+      "order_status",
+      "pay_bill",
+      "pin_change"
+    ],
+    "provenance": {
+      "raw_test_rows": 180,
+      "exact_train_test_duplicates_removed": 1,
+      "exact_duplicate_text": "i need my account frozen",
+      "near_duplicate_cosine_threshold": 0.95,
+      "test_rows_with_near_twin_in_train": 24,
+      "test_rows_with_near_twin_in_train_pct": 0.1341
+    }
+  },
+  "model": {
+    "architecture": "384 -> 128 -> 64 -> 6 dense, dropout 0.3",
+    "params": 57926,
+    "max_epochs": 200,
+    "batch_size": 32
+  },
+  "training": {
+    "epochs_run": 75,
+    "early_stopped": true,
+    "best_epoch": 55,
+    "final_val_loss": 0.00318983499892056,
+    "best_val_loss": 0.0029302171897143126,
+    "best_val_accuracy": 1.0
+  },
+  "test": {
+    "loss": 0.02908247895538807,
+    "accuracy": 0.9888268113136292,
+    "macro_f1": 0.9887931832916551,
+    "weighted_f1": 0.9888252633801132,
+    "per_class": {
+      "bill_balance": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "card_declined": {
+        "precision": 1.0,
+        "recall": 0.9666666666666667,
+        "f1": 0.9830508474576272,
+        "support": 30
+      },
+      "freeze_account": {
+        "precision": 0.9666666666666667,
+        "recall": 1.0,
+        "f1": 0.9830508474576272,
+        "support": 29
+      },
+      "order_status": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 30
+      },
+      "pay_bill": {
+        "precision": 0.967741935483871,
+        "recall": 1.0,
+        "f1": 0.9836065573770492,
+        "support": 30
+      },
+      "pin_change": {
+        "precision": 1.0,
+        "recall": 0.9666666666666667,
+        "f1": 0.9830508474576272,
+        "support": 30
+      }
+    },
+    "confusion_matrix": [
+      [
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        29,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        29,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        30,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        30,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        29
+      ]
+    ]
+  }
+}
