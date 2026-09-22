@@ -1,0 +1,22 @@
+[project]
+name = "chatbot"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Swami Buddha Chaitanya", email = "chaitanya.swami04@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.141.1",
+    "numpy>=2.2.6",
+    "pandas>=2.3.3",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+    "scikit-learn>=1.7.2",
+    "sentence-transformers>=6.1.0",
+    "uvicorn>=0.53.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
