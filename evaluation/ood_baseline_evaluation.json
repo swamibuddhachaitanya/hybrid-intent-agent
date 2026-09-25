@@ -1,0 +1,291 @@
+{
+  "summary": {
+    "total_evaluated": 5320,
+    "in_distribution_test_count": 179
+  },
+  "distributions": {
+    "in_distribution_test": {
+      "count": 179,
+      "mean_p_max": 0.9901037812232971,
+      "std_p_max": 0.04904085770249367,
+      "min_p_max": 0.5009673833847046,
+      "p50": 0.9999914169311523,
+      "p90": 0.9999994039535522,
+      "p95": 0.9999996423721313,
+      "p99": 0.9999997615814209,
+      "max_p_max": 0.9999997615814209
+    },
+    "tier_a_out_of_domain": {
+      "count": 1000,
+      "mean_p_max": 0.6939002871513367,
+      "std_p_max": 0.21916291117668152,
+      "min_p_max": 0.22132202982902527,
+      "p50": 0.6962411403656006,
+      "p90": 0.982265055179596,
+      "p95": 0.9938992261886597,
+      "p99": 0.99949049949646,
+      "max_p_max": 0.9999969005584717
+    },
+    "tier_b_in_domain_unsupported": {
+      "count": 4050,
+      "mean_p_max": 0.7366083264350891,
+      "std_p_max": 0.21526679396629333,
+      "min_p_max": 0.21560657024383545,
+      "p50": 0.7759162187576294,
+      "p90": 0.9916353225708008,
+      "p95": 0.9975982904434204,
+      "p99": 0.9997501373291016,
+      "max_p_max": 0.9999922513961792
+    },
+    "tier_c_hard_boundary": {
+      "count": 270,
+      "mean_p_max": 0.8789459466934204,
+      "std_p_max": 0.17368046939373016,
+      "min_p_max": 0.2363997995853424,
+      "p50": 0.9759249091148376,
+      "p90": 0.9994564056396484,
+      "p95": 0.9998844265937805,
+      "p99": 0.9999710321426392,
+      "max_p_max": 0.9999927282333374
+    }
+  },
+  "leakage_tables": {
+    "in_distribution_test_retention": {
+      "tau_0.50": {
+        "leaked_count": 179,
+        "leakage_rate": 1.0
+      },
+      "tau_0.70": {
+        "leaked_count": 178,
+        "leakage_rate": 0.994413407821229
+      },
+      "tau_0.80": {
+        "leaked_count": 177,
+        "leakage_rate": 0.9888268156424581
+      },
+      "tau_0.85": {
+        "leaked_count": 174,
+        "leakage_rate": 0.9720670391061452
+      },
+      "tau_0.90": {
+        "leaked_count": 173,
+        "leakage_rate": 0.9664804469273743
+      },
+      "tau_0.95": {
+        "leaked_count": 170,
+        "leakage_rate": 0.9497206703910615
+      },
+      "tau_0.99": {
+        "leaked_count": 168,
+        "leakage_rate": 0.9385474860335196
+      }
+    },
+    "tier_a_leakage": {
+      "tau_0.50": {
+        "leaked_count": 759,
+        "leakage_rate": 0.759
+      },
+      "tau_0.70": {
+        "leaked_count": 494,
+        "leakage_rate": 0.494
+      },
+      "tau_0.80": {
+        "leaked_count": 398,
+        "leakage_rate": 0.398
+      },
+      "tau_0.85": {
+        "leaked_count": 325,
+        "leakage_rate": 0.325
+      },
+      "tau_0.90": {
+        "leaked_count": 248,
+        "leakage_rate": 0.248
+      },
+      "tau_0.95": {
+        "leaked_count": 178,
+        "leakage_rate": 0.178
+      },
+      "tau_0.99": {
+        "leaked_count": 74,
+        "leakage_rate": 0.074
+      }
+    },
+    "tier_b_leakage": {
+      "tau_0.50": {
+        "leaked_count": 3270,
+        "leakage_rate": 0.8074074074074075
+      },
+      "tau_0.70": {
+        "leaked_count": 2367,
+        "leakage_rate": 0.5844444444444444
+      },
+      "tau_0.80": {
+        "leaked_count": 1897,
+        "leakage_rate": 0.46839506172839507
+      },
+      "tau_0.85": {
+        "leaked_count": 1617,
+        "leakage_rate": 0.39925925925925926
+      },
+      "tau_0.90": {
+        "leaked_count": 1318,
+        "leakage_rate": 0.3254320987654321
+      },
+      "tau_0.95": {
+        "leaked_count": 986,
+        "leakage_rate": 0.24345679012345678
+      },
+      "tau_0.99": {
+        "leaked_count": 442,
+        "leakage_rate": 0.1091358024691358
+      }
+    },
+    "tier_c_leakage": {
+      "tau_0.50": {
+        "leaked_count": 257,
+        "leakage_rate": 0.9518518518518518
+      },
+      "tau_0.70": {
+        "leaked_count": 221,
+        "leakage_rate": 0.8185185185185185
+      },
+      "tau_0.80": {
+        "leaked_count": 203,
+        "leakage_rate": 0.7518518518518519
+      },
+      "tau_0.85": {
+        "leaked_count": 191,
+        "leakage_rate": 0.7074074074074074
+      },
+      "tau_0.90": {
+        "leaked_count": 181,
+        "leakage_rate": 0.6703703703703704
+      },
+      "tau_0.95": {
+        "leaked_count": 162,
+        "leakage_rate": 0.6
+      },
+      "tau_0.99": {
+        "leaked_count": 112,
+        "leakage_rate": 0.4148148148148148
+      }
+    }
+  },
+  "tier_c_breakdown": {
+    "replacement_card_duration": {
+      "hypothesized_collision": "order_status",
+      "total": 30,
+      "matched_hypothesis_count": 3,
+      "predicted_distribution": {
+        "card_declined": 27,
+        "order_status": 3
+      },
+      "mean_p_max": 0.9347369273503622,
+      "p95": 0.9995284289121628,
+      "hypothesis_match_rate": 0.1
+    },
+    "balance": {
+      "hypothesized_collision": "bill_balance",
+      "total": 30,
+      "matched_hypothesis_count": 27,
+      "predicted_distribution": {
+        "bill_balance": 27,
+        "pay_bill": 1,
+        "freeze_account": 1,
+        "order_status": 1
+      },
+      "mean_p_max": 0.8272099902232488,
+      "p95": 0.9996403008699417,
+      "hypothesis_match_rate": 0.9
+    },
+    "new_card": {
+      "hypothesized_collision": "freeze_account",
+      "total": 30,
+      "matched_hypothesis_count": 0,
+      "predicted_distribution": {
+        "card_declined": 29,
+        "pay_bill": 1
+      },
+      "mean_p_max": 0.947342981894811,
+      "p95": 0.9990309625864029,
+      "hypothesis_match_rate": 0.0
+    },
+    "bill_due": {
+      "hypothesized_collision": "bill_balance",
+      "total": 30,
+      "matched_hypothesis_count": 17,
+      "predicted_distribution": {
+        "bill_balance": 17,
+        "pay_bill": 9,
+        "order_status": 3,
+        "card_declined": 1
+      },
+      "mean_p_max": 0.9003897935152054,
+      "p95": 0.9987588822841644,
+      "hypothesis_match_rate": 0.5666666666666667
+    },
+    "damaged_card": {
+      "hypothesized_collision": "card_declined",
+      "total": 30,
+      "matched_hypothesis_count": 27,
+      "predicted_distribution": {
+        "card_declined": 27,
+        "pay_bill": 2,
+        "order_status": 1
+      },
+      "mean_p_max": 0.9497147917747497,
+      "p95": 0.9998275220394135,
+      "hypothesis_match_rate": 0.9
+    },
+    "account_blocked": {
+      "hypothesized_collision": "freeze_account",
+      "total": 30,
+      "matched_hypothesis_count": 30,
+      "predicted_distribution": {
+        "freeze_account": 30
+      },
+      "mean_p_max": 0.9589641551176707,
+      "p95": 0.999982750415802,
+      "hypothesis_match_rate": 1.0
+    },
+    "pto_balance": {
+      "hypothesized_collision": "bill_balance",
+      "total": 30,
+      "matched_hypothesis_count": 16,
+      "predicted_distribution": {
+        "bill_balance": 16,
+        "freeze_account": 6,
+        "order_status": 8
+      },
+      "mean_p_max": 0.7866776078939438,
+      "p95": 0.9961890697479248,
+      "hypothesis_match_rate": 0.5333333333333333
+    },
+    "order": {
+      "hypothesized_collision": "order_status",
+      "total": 30,
+      "matched_hypothesis_count": 23,
+      "predicted_distribution": {
+        "pay_bill": 6,
+        "order_status": 23,
+        "bill_balance": 1
+      },
+      "mean_p_max": 0.8870517154534657,
+      "p95": 0.9999207556247711,
+      "hypothesis_match_rate": 0.7666666666666667
+    },
+    "order_checks": {
+      "hypothesized_collision": "order_status",
+      "total": 30,
+      "matched_hypothesis_count": 19,
+      "predicted_distribution": {
+        "order_status": 19,
+        "pay_bill": 8,
+        "pin_change": 3
+      },
+      "mean_p_max": 0.7184256891409556,
+      "p95": 0.9907918691635131,
+      "hypothesis_match_rate": 0.6333333333333333
+    }
+  }
+}

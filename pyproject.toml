@@ -11,6 +11,7 @@ dependencies = [
     "numpy>=2.2.6",
     "pandas>=2.3.3",
     "pydantic>=2.13.5",
+    "pytest>=9.1.1",
     "python-dotenv>=1.2.3",
     "scikit-learn>=1.7.2",
     "sentence-transformers>=6.1.0",
