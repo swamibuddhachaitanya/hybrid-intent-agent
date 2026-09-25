@@ -1,0 +1,70 @@
+{
+  "Tier A (Out of Domain)": {
+    "Max Softmax (MSP)": {
+      "auroc": 0.9762262569832403,
+      "fpr_at_95_tpr": 0.194,
+      "threshold_at_95_tpr": 0.9380542039871216
+    },
+    "Energy Score": {
+      "auroc": 0.9901899441340782,
+      "fpr_at_95_tpr": 0.061,
+      "threshold_at_95_tpr": 5.126486778259277
+    },
+    "Centroid Cosine Sim": {
+      "auroc": 0.9968882681564245,
+      "fpr_at_95_tpr": 0.018,
+      "threshold_at_95_tpr": 0.4627513885498047
+    }
+  },
+  "Tier B (In-Domain Unsupported)": {
+    "Max Softmax (MSP)": {
+      "auroc": 0.9700262087040484,
+      "fpr_at_95_tpr": 0.2671604938271605,
+      "threshold_at_95_tpr": 0.9380542039871216
+    },
+    "Energy Score": {
+      "auroc": 0.9858252293261605,
+      "fpr_at_95_tpr": 0.09283950617283951,
+      "threshold_at_95_tpr": 5.126486778259277
+    },
+    "Centroid Cosine Sim": {
+      "auroc": 0.9934478239878612,
+      "fpr_at_95_tpr": 0.059506172839506176,
+      "threshold_at_95_tpr": 0.4627513885498047
+    }
+  },
+  "Tier C (Hard Boundary)": {
+    "Max Softmax (MSP)": {
+      "auroc": 0.9240844196151459,
+      "fpr_at_95_tpr": 0.6259259259259259,
+      "threshold_at_95_tpr": 0.9380542039871216
+    },
+    "Energy Score": {
+      "auroc": 0.9487068073660253,
+      "fpr_at_95_tpr": 0.4111111111111111,
+      "threshold_at_95_tpr": 5.126486778259277
+    },
+    "Centroid Cosine Sim": {
+      "auroc": 0.9447961928408856,
+      "fpr_at_95_tpr": 0.5074074074074074,
+      "threshold_at_95_tpr": 0.4627513885498047
+    }
+  },
+  "All OOD Combined": {
+    "Max Softmax (MSP)": {
+      "auroc": 0.9688599991599108,
+      "fpr_at_95_tpr": 0.2716165413533835,
+      "threshold_at_95_tpr": 0.9380542039871216
+    },
+    "Energy Score": {
+      "auroc": 0.984761834754484,
+      "fpr_at_95_tpr": 0.10300751879699248,
+      "threshold_at_95_tpr": 5.126486778259277
+    },
+    "Centroid Cosine Sim": {
+      "auroc": 0.9916253622884026,
+      "fpr_at_95_tpr": 0.07443609022556391,
+      "threshold_at_95_tpr": 0.4627513885498047
+    }
+  }
+}

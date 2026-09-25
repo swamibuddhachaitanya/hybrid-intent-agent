@@ -1,0 +1,122 @@
+{
+  "R_10": {
+    "Softmax": {
+      "validation_tuning": {
+        "threshold": 0.9999995231628418,
+        "total_cost": 117.0,
+        "false_reject_count": 117,
+        "false_reject_rate": 0.975,
+        "false_accept_count": 0,
+        "false_accept_rate": 0.0
+      },
+      "test_evaluation": {
+        "tau": 0.9999995231628418,
+        "in_distribution_automated_pct": 8.938547486033519,
+        "in_distribution_error_leaks": 0,
+        "ood_leakages": {
+          "Tier A": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier B": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier C": {
+            "count": 0,
+            "rate_pct": 0.0
+          }
+        }
+      }
+    },
+    "Energy": {
+      "validation_tuning": {
+        "threshold": 10.270679473876953,
+        "total_cost": 82.0,
+        "false_reject_count": 72,
+        "false_reject_rate": 0.6,
+        "false_accept_count": 1,
+        "false_accept_rate": 0.00018796992481203009
+      },
+      "test_evaluation": {
+        "tau": 10.270679473876953,
+        "in_distribution_automated_pct": 45.81005586592179,
+        "in_distribution_error_leaks": 0,
+        "ood_leakages": {
+          "Tier A": {
+            "count": 1,
+            "rate_pct": 0.1
+          },
+          "Tier B": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier C": {
+            "count": 0,
+            "rate_pct": 0.0
+          }
+        }
+      }
+    }
+  },
+  "R_50": {
+    "Softmax": {
+      "validation_tuning": {
+        "threshold": 0.9999995231628418,
+        "total_cost": 117.0,
+        "false_reject_count": 117,
+        "false_reject_rate": 0.975,
+        "false_accept_count": 0,
+        "false_accept_rate": 0.0
+      },
+      "test_evaluation": {
+        "tau": 0.9999995231628418,
+        "in_distribution_automated_pct": 8.938547486033519,
+        "in_distribution_error_leaks": 0,
+        "ood_leakages": {
+          "Tier A": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier B": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier C": {
+            "count": 0,
+            "rate_pct": 0.0
+          }
+        }
+      }
+    },
+    "Energy": {
+      "validation_tuning": {
+        "threshold": 11.19456958770752,
+        "total_cost": 97.0,
+        "false_reject_count": 97,
+        "false_reject_rate": 0.8083333333333333,
+        "false_accept_count": 0,
+        "false_accept_rate": 0.0
+      },
+      "test_evaluation": {
+        "tau": 11.19456958770752,
+        "in_distribution_automated_pct": 32.960893854748605,
+        "in_distribution_error_leaks": 0,
+        "ood_leakages": {
+          "Tier A": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier B": {
+            "count": 0,
+            "rate_pct": 0.0
+          },
+          "Tier C": {
+            "count": 0,
+            "rate_pct": 0.0
+          }
+        }
+      }
+    }
+  }
+}
