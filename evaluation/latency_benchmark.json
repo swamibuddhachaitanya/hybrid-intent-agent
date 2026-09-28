@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-09-25T08:50:44.147923+00:00",
+  "hardware": "Local CPU Inference (Intel / AMD)",
+  "llm_provider": "Groq API (qwen/qwen3.8-27b)",
+  "sample_counts": {
+    "tool_iterations": 100,
+    "tool_warmup_iterations": 20,
+    "tool_samples_discarded": 10,
+    "llm_iterations": 30,
+    "inter_call_sleep_s": 2.5
+  },
+  "environment_note": "Measured on a shared laptop that also runs Docker Desktop. Across repeated runs the tool p50 ranged from about 16ms to 32ms depending on warmup and background load, so treat these percentiles as an order of magnitude, not a specification.",
+  "rate_limit_note": "The provider caps this model at 1000 output tokens per minute, which bounds benchmark throughput regardless of the sample count requested. Calls are paced by 2.5s so rate-limit waits do not enter the latency distribution.",
+  "latency_metrics": {
+    "tool_path": {
+      "mean_ms": 29.41,
+      "median_p50_ms": 27.11,
+      "p95_ms": 48.42,
+      "p99_ms": 65.13,
+      "min_ms": 16.87,
+      "max_ms": 71.52
+    },
+    "llm_fallback_path": {
+      "mean_ms": 1244.05,
+      "median_p50_ms": 419.32,
+      "p95_ms": 1031.59,
+      "p99_ms": 17301.69,
+      "min_ms": 326.88,
+      "max_ms": 23876.49
+    },
+    "llm_calls_that_retried": 1,
+    "latency_speedup_factor": 15.5
+  },
+  "cost_analysis_100k_queries": {
+    "total_queries": 100000,
+    "assumptions": {
+      "avg_input_tokens": 184.0,
+      "avg_output_tokens": 30.2,
+      "token_source": "measured_provider_usage",
+      "input_token_rate_per_million": 0.15,
+      "output_token_rate_per_million": 0.6,
+      "cost_per_query_usd": 4.6e-05
+    },
+    "pure_llm_baseline_usd": 4.57,
+    "hybrid_system_cost_usd": 2.48,
+    "net_savings_usd": 2.09,
+    "savings_percentage": 45.73,
+    "read_regime_local_automated_pct": 45.800000000000004,
+    "llm_fallback_pct": 54.2,
+    "regime_note": "Automation rate is the read-intent cutoff (tau=10.2707). Write intents use tau=11.1946, so blended traffic sits between 33% and 46%. The savings percentage equals the automation rate by construction, because the local path is priced at zero."
+  }
+}
