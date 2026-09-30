@@ -13,11 +13,16 @@ dependencies = [
     "pydantic>=2.13.5",
     "pytest>=9.1.1",
     "python-dotenv>=1.2.3",
+    "requests>=2.31.0",
     "scikit-learn>=1.7.2",
+    "scipy>=1.15.3",
     "sentence-transformers>=6.1.0",
+    "tensorflow>=2.15.0",
     "uvicorn>=0.53.0",
 ]
 
-[build-system]
-requires = ["uv_build>=0.12.15,<0.13.0"]
-build-backend = "uv_build"
+# This project is an application, not an installable library: nothing is built or
+# installed from it. requirements.txt is the dependency source of truth for the
+# container image, and this file covers local `uv` usage.
+[tool.uv]
+package = false

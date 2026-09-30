@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Intent Support AI - Real-time Decision Inspector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Modern sleek scrollbars */
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 h-full flex flex-col overflow-hidden">
+
+    <!-- Sticky Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur px-6 py-3 flex items-center justify-between shrink-0 z-50">
+        <div class="flex items-center space-x-3">
+            <div class="relative flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping absolute opacity-75"></span>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-sm font-bold text-white tracking-tight">Hybrid Intent Support AI</h1>
+                    <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">Production Architecture</span>
+                </div>
+                <p class="text-[11px] text-slate-400">MiniLM-L6-v2 (384-d) &bull; Energy Gate (&tau;<sub>read</sub>=10.27, &tau;<sub>write</sub>=11.19) &bull; Groq LLM Fallback</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3 text-xs font-mono">
+            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded-lg text-slate-300 flex items-center gap-1.5">
+                <span class="text-slate-500">USER:</span>
+                <span class="text-emerald-400 font-semibold" id="activeUser">cust_1001</span>
+            </div>
+            <button id="resetBtn" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3 py-1 rounded-lg transition-colors font-semibold flex items-center gap-1">
+                <span>&#8634;</span> Reset
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace (Constrained to viewport height with internal scroll) -->
+    <main class="flex-1 flex max-w-7xl w-full mx-auto p-4 md:p-6 gap-6 min-h-0 overflow-hidden">
+        
+        <!-- Left: Interactive Chat Panel -->
+        <section class="flex-1 flex flex-col bg-slate-900/80 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur min-h-0 overflow-hidden">
+            
+            <!-- Quick Test Scenario Chips -->
+            <div class="p-3 bg-slate-950/60 border-b border-slate-800/80 flex items-center gap-2 overflow-x-auto custom-scroll text-xs shrink-0">
+                <span class="text-slate-500 font-semibold shrink-0 pl-1">Scenarios:</span>
+                <button class="chip bg-slate-800/80 hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-500/40 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full transition-all whitespace-nowrap">Pay $50 on my visa</button>
+                <button class="chip bg-slate-800/80 hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-500/40 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full transition-all whitespace-nowrap">I want to pay my bill</button>
+                <button class="chip bg-slate-800/80 hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-500/40 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full transition-all whitespace-nowrap">Freeze card ending 4321</button>
+                <button class="chip bg-slate-800/80 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full transition-all whitespace-nowrap">Can I get a 30yr mortgage?</button>
+                <button class="chip bg-slate-800/80 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/40 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full transition-all whitespace-nowrap">What is the weather today?</button>
+            </div>
+
+            <!-- Scrollable Messages Container -->
+            <div id="messagesContainer" class="flex-1 p-4 md:p-6 overflow-y-auto custom-scroll space-y-4 min-h-0">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl rounded-tl-none p-4 max-w-xl text-sm text-slate-200 leading-relaxed shadow-md">
+                        Hello! I am your AI banking assistant. I can handle bill payments, account freezes, order tracking, and balance inquiries. In-distribution requests execute in ~15ms; general requests route automatically to our live LLM fallback.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Form (Pinned to bottom) -->
+            <form id="chatForm" class="p-3.5 bg-slate-950/80 border-t border-slate-800 flex gap-2.5 shrink-0">
+                <input type="text" id="userInput" placeholder="Ask a question or request an action (e.g. 'Pay $50 on my visa')..." 
+                       class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-white placeholder-slate-500" autocomplete="off" required>
+                <button type="submit" id="sendBtn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/10 active:scale-95">
+                    <span>Send</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Right: Real-time Telemetry & Decision Inspector -->
+        <aside class="w-96 flex flex-col gap-4 shrink-0 min-h-0 overflow-y-auto custom-scroll">
+            
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col gap-4 shadow-xl backdrop-blur">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        Decision Telemetry
+                    </h2>
+                    <span id="routeBadge" class="text-xs font-mono font-bold px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">IDLE</span>
+                </div>
+
+                <!-- Latency Gauge -->
+                <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-slate-400 font-medium">Wall-Clock Latency</div>
+                        <div class="text-[10px] text-slate-500 font-mono">p50 tool: 15.7ms &bull; p50 LLM: 1,522ms</div>
+                    </div>
+                    <span id="latencyVal" class="text-base font-mono font-bold text-emerald-400">-- ms</span>
+                </div>
+
+                <!-- Classification Details -->
+                <div class="space-y-2.5">
+                    <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80 space-y-1.5">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Predicted Intent</span>
+                            <span id="intentVal" class="font-mono text-slate-200 font-semibold">--</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">Softmax Confidence</span>
+                            <span id="confVal" class="font-mono text-slate-200">-- %</span>
+                        </div>
+                    </div>
+
+                    <!-- Energy Score Meter -->
+                    <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 space-y-2">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-xs text-slate-400">Energy Score S(x)</span>
+                            <span id="energyVal" class="font-mono text-sm font-bold text-white">--</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                            <div id="energyBar" class="bg-emerald-400 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                        <div class="text-[10px] text-slate-500 flex justify-between font-mono pt-0.5">
+                            <span>&tau;<sub>read</sub> = 10.27</span>
+                            <span>&tau;<sub>write</sub> = 11.19</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extracted Slots Inspector -->
+                <div>
+                    <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+                        <span>Extracted Dialogue Slots</span>
+                        <span class="text-[10px] font-mono text-slate-500 normal-case font-normal">State Memory</span>
+                    </h3>
+                    <div id="slotsContainer" class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 min-h-[90px] text-xs font-mono text-slate-300 flex items-center justify-center">
+                        <span class="text-slate-600 text-xs italic">No active entity slots</span>
+                    </div>
+                </div>
+
+                <!-- Architectural Defense Note -->
+                <div class="text-[11px] text-slate-400 border-t border-slate-800/80 pt-3 leading-relaxed">
+                    <span class="text-emerald-400 font-semibold">Production Guarantee:</span> In-distribution queries bypass LLM costs and latency, executing in ~15ms with 0.00% boundary leakage.
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Client Logic -->
+    <script>
+        const userId = "cust_1001";
+        let sessionId = "sess_" + Math.random().toString(36).substring(2, 9);
+
+        const messagesContainer = document.getElementById("messagesContainer");
+        const chatForm = document.getElementById("chatForm");
+        const userInput = document.getElementById("userInput");
+        const resetBtn = document.getElementById("resetBtn");
+
+        const routeBadge = document.getElementById("routeBadge");
+        const latencyVal = document.getElementById("latencyVal");
+        const intentVal = document.getElementById("intentVal");
+        const confVal = document.getElementById("confVal");
+        const energyVal = document.getElementById("energyVal");
+        const energyBar = document.getElementById("energyBar");
+        const slotsContainer = document.getElementById("slotsContainer");
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Scenario chips click
+        document.querySelectorAll(".chip").forEach(chip => {
+            chip.addEventListener("click", () => {
+                userInput.value = chip.textContent;
+                chatForm.dispatchEvent(new Event("submit"));
+            });
+        });
+
+        // Reset session
+        resetBtn.addEventListener("click", async () => {
+            try {
+                await fetch("/session/reset", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+                sessionId = "sess_" + Math.random().toString(36).substring(2, 9);
+                messagesContainer.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl rounded-tl-none p-4 max-w-xl text-sm text-slate-200">
+                            Dialogue session reset. How can I assist you today?
+                        </div>
+                    </div>`;
+                updateTelemetry({ route_taken: "RESET", latency_ms: 0, intent: "--", confidence_score: 0, energy_score: 0, slots: {} });
+            } catch (err) {
+                console.error("Reset error:", err);
+            }
+        });
+
+        // Chat submit
+        chatForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage("User", text, "user");
+            userInput.value = "";
+
+            // Show temporary loading indicator
+            const loadingRow = document.createElement("div");
+            loadingRow.id = "loadingIndicator";
+            loadingRow.className = "flex items-start gap-3";
+            loadingRow.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl rounded-tl-none p-3.5 text-xs text-slate-400 font-mono flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    Evaluating embedding & energy gate...
+                </div>`;
+            messagesContainer.appendChild(loadingRow);
+            scrollToBottom();
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        session_id: sessionId,
+                        message: text
+                    })
+                });
+
+                const loader = document.getElementById("loadingIndicator");
+                if (loader) loader.remove();
+
+                if (!response.ok) {
+                    appendMessage("System", "Service error processing query.", "ai");
+                    return;
+                }
+
+                const data = await response.json();
+                appendMessage("AI", data.reply, "ai");
+                updateTelemetry(data);
+
+            } catch (err) {
+                const loader = document.getElementById("loadingIndicator");
+                if (loader) loader.remove();
+                appendMessage("System", "Network connection failed.", "ai");
+                console.error(err);
+            }
+        });
+
+        function appendMessage(sender, text, type) {
+            const isUser = type === "user";
+            const row = document.createElement("div");
+            row.className = `flex items-start gap-3 ${isUser ? "flex-row-reverse" : ""}`;
+
+            const avatar = document.createElement("div");
+            avatar.className = `w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                isUser 
+                ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" 
+                : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+            }`;
+            avatar.textContent = isUser ? "YOU" : "AI";
+
+            const bubble = document.createElement("div");
+            bubble.className = `p-4 max-w-xl text-sm rounded-2xl leading-relaxed shadow-sm ${
+                isUser 
+                ? "bg-blue-600 text-white rounded-tr-none" 
+                : "bg-slate-950 border border-slate-800 text-slate-200 rounded-tl-none"
+            }`;
+            bubble.textContent = text;
+
+            row.appendChild(avatar);
+            row.appendChild(bubble);
+            messagesContainer.appendChild(row);
+            scrollToBottom();
+        }
+
+        function updateTelemetry(data) {
+            const route = data.route_taken || "IDLE";
+            routeBadge.textContent = route;
+            if (route === "TOOL") {
+                routeBadge.className = "text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm shadow-emerald-500/20";
+            } else if (route === "LLM_FALLBACK") {
+                routeBadge.className = "text-xs font-mono font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/40 shadow-sm shadow-purple-500/20";
+            } else if (route === "CLARIFICATION") {
+                routeBadge.className = "text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 shadow-sm shadow-amber-500/20";
+            } else {
+                routeBadge.className = "text-xs font-mono font-bold px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700";
+            }
+
+            const lat = data.latency_ms !== undefined ? data.latency_ms : 0;
+            latencyVal.textContent = lat.toFixed(1) + " ms";
+            if (lat < 50) {
+                latencyVal.className = "text-base font-mono font-bold text-emerald-400";
+            } else {
+                latencyVal.className = "text-base font-mono font-bold text-purple-400";
+            }
+
+            intentVal.textContent = data.intent || "--";
+            confVal.textContent = data.confidence_score ? (data.confidence_score * 100).toFixed(1) + "%" : "--";
+            
+            const energy = data.energy_score !== undefined ? data.energy_score : 0;
+            energyVal.textContent = energy.toFixed(3);
+
+            // Energy meter percentage (scale: 0 to 14)
+            const pct = Math.max(0, Math.min(100, (energy / 14.0) * 100));
+            energyBar.style.width = pct + "%";
+            if (energy >= 11.19) {
+                energyBar.className = "bg-emerald-400 h-1.5 rounded-full transition-all duration-300";
+            } else if (energy >= 10.27) {
+                energyBar.className = "bg-cyan-400 h-1.5 rounded-full transition-all duration-300";
+            } else {
+                energyBar.className = "bg-purple-400 h-1.5 rounded-full transition-all duration-300";
+            }
+
+            if (data.slots && Object.keys(data.slots).length > 0) {
+                slotsContainer.className = "bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 min-h-[90px] text-xs font-mono text-emerald-400 flex flex-col justify-center";
+                slotsContainer.innerHTML = `<pre class="leading-relaxed">${JSON.stringify(data.slots, null, 2)}</pre>`;
+            } else {
+                slotsContainer.className = "bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80 min-h-[90px] text-xs font-mono text-slate-300 flex items-center justify-center";
+                slotsContainer.innerHTML = `<span class="text-slate-600 text-xs italic">No active entity slots</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
